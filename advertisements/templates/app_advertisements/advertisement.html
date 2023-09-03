@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Объявление
+{% endblock %}
+
+{% block content %}
+  <ul class="nav nav-pills sticky-top bg-white nav-fill">
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'main-page' %}">
+        <span style="font-weight: bold;">Главная</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'top-sellers' %}"><span style="font-weight: bold;">Топ продавцов</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'me_post' %}">
+        <span style="font-weight: bold;">Разместить объявление</span>
+      </a>
+    </li>
+    {% if not user.is_authenticated %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'register' %}">
+        <span style="font-weight: bold;">Регистрация</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'login' %}">
+        <span style="font-weight: bold;">Войти</span>
+      </a>
+    </li>
+    {% else %}
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'profile' %}">
+        <span style="font-weight: bold;">Профиль</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'logout' %}">
+        <span style="font-weight: bold;">Выйти</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+
+  <div class="container" style="margin: 50px;">
+    <div class="display-2">
+      <span class="badge bg-primary">Объявление пользователя {{ advertisement.user }}</span>
+    </div>
+  </div>
+  <div class="col offset-2">
+    <div class="card mb-2" style="max-width: 1200px; margin-top: 20px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <a href="#" class="nav-link">
+            <img src="{% if advertisement.image %} {{ advertisement.image.url }} {% else %} {% static 'img/adv.png' %} {% endif %}" class="img-fluid rounded-start" alt="Card title">
+          </a>
+        </div>
+        <div class="col">
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href="#" class="nav-link"><strong>{{ advertisement.title }}</strong></a>
+            </h5>
+            <p class="card-text">
+              {{ advertisement.description }}
+            </p>
+            <span>Автор: {{ advertisement.username }}</span>
+            <p class="card-text"><small class="text-muted">Размещено: {{ advertisement.created_at }}</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
